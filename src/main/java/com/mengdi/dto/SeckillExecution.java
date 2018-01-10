@@ -6,8 +6,7 @@ package com.mengdi.dto;
  */
 
 import com.mengdi.entity.SuccessKilled;
-
-import enums.SeckillStateEnum;
+import com.mengdi.enums.SeckillStateEnum;
 
 public class SeckillExecution {
 

@@ -36,6 +36,7 @@ public class SeckillServiceTest {
 		logger.info("seckill={}", seckill);
 	}
 
+	//集成测试代码完整逻辑，注意可重复执行
 	@Test
 	public void testSeckillLogic() {
 		long seckillId = 1000L;		

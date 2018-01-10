@@ -14,13 +14,11 @@ import com.mengdi.dto.Exposer;
 import com.mengdi.dto.SeckillExecution;
 import com.mengdi.entity.Seckill;
 import com.mengdi.entity.SuccessKilled;
+import com.mengdi.enums.SeckillStateEnum;
 import com.mengdi.exception.RepeatKillException;
 import com.mengdi.exception.SeckillCloseException;
 import com.mengdi.exception.SeckillException;
 import com.mengdi.service.SeckillService;
-
-import enums.SeckillStateEnum;
-//@Component @Service @Dao @Controller
 
 @Service
 public class SeckillServiceImpl implements SeckillService {

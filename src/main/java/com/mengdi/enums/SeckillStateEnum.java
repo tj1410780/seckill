@@ -1,4 +1,4 @@
-package enums;
+package com.mengdi.enums;
 /**
  * 使用枚举表述常量数据字段
  * @author simon
