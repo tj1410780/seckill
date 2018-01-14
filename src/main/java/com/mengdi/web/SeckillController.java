@@ -1,8 +1,5 @@
 package com.mengdi.web;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-
-import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +26,7 @@ import com.mengdi.exception.SeckillException;
 import com.mengdi.service.SeckillService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/seckill")
 public class SeckillController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -44,6 +41,7 @@ public class SeckillController {
 		model.addAttribute("list", seckills);
 		return "list";		///WEB-INF/jsp/list.jsp
 	}
+	
 	@RequestMapping(value = "/{seckillId}/detail", method = RequestMethod.GET)
 	public String detail(@PathVariable("seckillId") Long seckillId, Model model) {		
 		if (seckillId == null) {
@@ -61,12 +59,13 @@ public class SeckillController {
 	@RequestMapping(value = "/{seckillId}/exposer", 
 			method = RequestMethod.POST,
 			produces = {"application/json;charset=UTF-8"})
+	@ResponseBody   //千万不能遗忘，否则报404错误
 	public SeckillResult<Exposer> exposer(@PathVariable("seckillId") long seckillId) {
 		SeckillResult<Exposer> result;
 		try {
 			Exposer exposer = seckillService.exportSeckillUrl(seckillId);
 			result = new SeckillResult<Exposer>(true, exposer);
-			return result;
+			return result;		
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			result = new SeckillResult<Exposer>(false, e.getMessage());
@@ -93,22 +92,23 @@ public class SeckillController {
 		} catch (RepeatKillException e) {
 			logger.error(e.getMessage(), e);
 			SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStateEnum.REPEAT_KILL);
-			result = new SeckillResult<SeckillExecution>(false, seckillExecution);
+			result = new SeckillResult<SeckillExecution>(true, seckillExecution);
 			return result;
 		} catch (SeckillCloseException e) {
 			logger.error(e.getMessage(), e);
 			SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStateEnum.End);
-			result = new SeckillResult<SeckillExecution>(false, seckillExecution);
+			result = new SeckillResult<SeckillExecution>(true, seckillExecution);
 			return result;
 		} catch (SeckillException e) {
 			logger.error(e.getMessage(), e);
 			SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStateEnum.Inner_ERROR);
-			result = new SeckillResult<SeckillExecution>(false, seckillExecution);
+			result = new SeckillResult<SeckillExecution>(true, seckillExecution);
 			return result;
 		}		
 	}
 	//获取系统时间
-	@RequestMapping(value = "/time/now", method = RequestMethod.GET)
+	@RequestMapping(value = "/time/now", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
 	public SeckillResult<Long> time() {
 		Date now = new Date();
 		return new SeckillResult<Long>(true, now.getTime());

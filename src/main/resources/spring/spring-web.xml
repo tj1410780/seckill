@@ -18,7 +18,7 @@
         xml,json默认读写支持 -->
 	<mvc:annotation-driven/>
 	
-	<!-- servlet-mapping映射路径："/" -->
+	<!-- 2.servlet-mapping映射路径："/" -->
 	<!-- 静态资源默认servlet配置 
 		1）加入对静态资源的处理：js, gif, png
 		2)允许使用"/"做整体映射
@@ -30,7 +30,7 @@
         	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         	<property name="prefix" value="/WEB-INF/jsp/"/>
         	<property name="suffix" value=".jsp"/>
-        </bean>
+    </bean>
 	<!-- 4.扫描web相关的bean -->
-	<context:component-scan base-package="com.mengdi.web"></context:component-scan>
-	</beans>
+	<context:component-scan base-package="com.mengdi.web"/>
+</beans>
