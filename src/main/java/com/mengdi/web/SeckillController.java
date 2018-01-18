@@ -2,9 +2,7 @@ package com.mengdi.web;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.mengdi.dto.Exposer;
 import com.mengdi.dto.SeckillExecution;
 import com.mengdi.dto.SeckillResult;
@@ -45,11 +42,11 @@ public class SeckillController {
 	@RequestMapping(value = "/{seckillId}/detail", method = RequestMethod.GET)
 	public String detail(@PathVariable("seckillId") Long seckillId, Model model) {		
 		if (seckillId == null) {
-			return "redirect:/list";			
+			return "redirect:/seckill/list";			
 		}
 		Seckill seckill = seckillService.getById(seckillId);
 		if (seckill == null) {
-			return "forward:/list";
+			return "forward:/seckill/list";
 		}		
 		model.addAttribute("seckill", seckill);
 		return "detail";
@@ -78,7 +75,8 @@ public class SeckillController {
 			method = RequestMethod.POST,
 			produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
-	public SeckillResult<SeckillExecution> execute(@PathVariable("seckillId") long seckillId,
+	public SeckillResult<SeckillExecution> execute(
+			@PathVariable("seckillId") long seckillId,
 			@PathVariable("md5") String md5,
 			@CookieValue(value = "killPhone", required = false) Long userPhone) {
 		if (userPhone == null) {

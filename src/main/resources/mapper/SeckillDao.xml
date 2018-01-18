@@ -26,7 +26,7 @@
     	select * 
     	from seckill
     	order by create_time DESC
-    	limit #{offset},#{limit}
+    	limit #{offset}, #{limit}
     </select>
     
 </mapper>
